@@ -1,0 +1,9 @@
+# Robots.txt for True Kech Tours Marrakech
+User-agent: *
+Allow: /
+Disallow: /backend/
+Disallow: /tmp/
+
+# Host & Sitemap
+Host: https://truekechtours.com
+Sitemap: https://truekechtours.com/sitemap.xml

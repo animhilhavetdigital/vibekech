@@ -1,0 +1,13 @@
+{
+  "name": "globetrek",
+  "version": "1.0.0",
+  "description": "Globetrek static landing package",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx live-server --port=3000 --open=index.html",
+    "start": "npx live-server --port=3000 --open=index.html"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
