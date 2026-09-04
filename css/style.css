@@ -1,6 +1,13 @@
 @charset "UTF-8";
 :root {
-  --primary-color: #DCA546;
+:root {
+  --primary-color: #f58220;
+  --secondary-color: #2b59c3;
+  --vibekech-orange: #f58220;
+  --vibekech-orange-dark: #e07010;
+  --vibekech-blue: #2b59c3;
+  --vibekech-blue-dark: #1e40a0;
+}
   --secondary-color: #FDF8F1;
   --three-color: #fceebc;
   --four-color: #fdf8f1;

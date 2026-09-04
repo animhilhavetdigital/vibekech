@@ -2,7 +2,7 @@
  * Marrakech GlobeTrek Travel Interactive Calculator & Services Engine
  */
 
-const WHATSAPP_PHONE = '212600000000';
+const WHATSAPP_PHONE = '212659672184';
 
 document.addEventListener('DOMContentLoaded', function() {
     initDefaultDates();
@@ -37,18 +37,46 @@ function initDefaultDates() {
     });
 }
 
-// WhatsApp redirect helper
-function sendWhatsAppBooking(title, details, total) {
-    let msg = `*🌟 ${title} - Marrakech GlobeTrek Booking*\n\n`;
+function sendAutoNotification(data) {
+    const notificationEmail = 'vibekechcontact@gmail.com';
+    const endpoint = `https://formsubmit.co/ajax/${notificationEmail}`;
+    
+    try {
+        fetch(endpoint, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).catch(err => console.log('Auto notification:', err));
+    } catch (e) {
+        console.log('Notification error:', e);
+    }
+}
+
+function openWhatsApp(phone, message) {
+    const cleanPhone = (phone || WHATSAPP_PHONE).replace(/[^0-9]/g, '');
+    const encodedMsg = encodeURIComponent(message);
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    const url = isMobile 
+        ? `https://wa.me/${cleanPhone}?text=${encodedMsg}` 
+        : `https://web.whatsapp.com/send?phone=${cleanPhone}&text=${encodedMsg}`;
+    window.open(url, '_blank');
+    return url;
+}
+
+function sendWhatsAppBooking(title, details) {
+    let msg = `*🌟 ${title} - VibeKech Marrakech Booking*\n\n`;
     for (const [key, val] of Object.entries(details)) {
         if (val) {
             msg += `• *${key}:* ${val}\n`;
         }
     }
-    msg += `\n💰 *Total Price:* ${total}\n`;
-    msg += `\n👉 Please confirm my reservation and available pickup details.`;
+    msg += `\n💰 *Tarif:* Sur Devis Express WhatsApp\n`;
+    msg += `\n👉 Merci de me confirmer le meilleur prix et la disponibilité s'il vous plaît !`;
 
-    window.open(`https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
+    openWhatsApp(WHATSAPP_PHONE, msg);
 }
 
 // Tab switching
@@ -82,27 +110,9 @@ function initTransferCalc() {
     const priceDisplay = document.getElementById('transfer-price-val');
     const bookBtn = document.getElementById('btn-book-transfer');
 
-    const rates = {
-        'Ourika Valley': 350,
-        'Essaouira Beach': 650,
-        'Ouarzazate': 900,
-        'Agadir': 1100,
-        'Casablanca': 1200,
-        'Merzouga Desert': 2400
-    };
-
     function updatePrice() {
-        if (!toSelect || !priceDisplay) return;
-        const dest = toSelect.value;
-        let base = rates[dest] || 400;
-        
-        const vehicle = vehicleSelect ? vehicleSelect.value : 'van';
-        if (vehicle === 'minibus') base *= 1.4;
-        if (vehicle === 'vip') base *= 1.8;
-
-        const totalFormatted = Math.round(base) + ' DH';
-        priceDisplay.innerText = totalFormatted;
-        return totalFormatted;
+        if (!priceDisplay) return;
+        priceDisplay.innerHTML = `<span class="price-whatsapp-tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg> Prix sur WhatsApp</span>`;
     }
 
     if (toSelect) toSelect.addEventListener('change', updatePrice);
@@ -111,19 +121,18 @@ function initTransferCalc() {
 
     if (bookBtn) {
         bookBtn.addEventListener('click', function() {
-            const total = updatePrice();
             sendWhatsAppBooking('Medina Transfer Reservation', {
                 'From': fromSelect ? fromSelect.value : 'Marrakech',
                 'To': toSelect ? toSelect.value : 'Ourika',
                 'Date': dateInput ? dateInput.value : 'Upcoming',
                 'Persons': (peopleInput ? peopleInput.value : '2') + ' pax',
                 'Vehicle': vehicleSelect ? vehicleSelect.options[vehicleSelect.selectedIndex].text : 'Minivan'
-            }, total);
+            });
         });
     }
 }
 
-// 2. Multi-City Circuit Tour Builder (Base 1200 DH / day)
+// 2. Multi-City Circuit Tour Builder
 function initCircuitCalc() {
     const cityCheckboxes = document.querySelectorAll('.circuit-city-cb');
     const dateInput = document.getElementById('circuit-date');
@@ -134,17 +143,7 @@ function initCircuitCalc() {
 
     function updateCircuitPrice() {
         if (!priceDisplay) return;
-        const days = parseInt(daysInput ? daysInput.value : 1) || 1;
-        const people = parseInt(peopleInput ? peopleInput.value : 1) || 1;
-
-        let total = days * 1200;
-        if (people > 6) {
-            total += (people - 6) * 150 * days;
-        }
-
-        const totalFormatted = total.toLocaleString() + ' DH';
-        priceDisplay.innerText = totalFormatted;
-        return totalFormatted;
+        priceDisplay.innerHTML = `<span class="price-whatsapp-tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg> Prix sur WhatsApp</span>`;
     }
 
     cityCheckboxes.forEach(cb => cb.addEventListener('change', updateCircuitPrice));
@@ -154,7 +153,6 @@ function initCircuitCalc() {
 
     if (bookBtn) {
         bookBtn.addEventListener('click', function() {
-            const total = updateCircuitPrice();
             const selectedCities = [];
             cityCheckboxes.forEach(cb => {
                 if (cb.checked) selectedCities.push(cb.value);
@@ -165,7 +163,7 @@ function initCircuitCalc() {
                 'Start Date': dateInput ? dateInput.value : 'Upcoming',
                 'Duration': (daysInput ? daysInput.value : '3') + ' Days',
                 'Group Size': (peopleInput ? peopleInput.value : '2') + ' Travelers'
-            }, total);
+            });
         });
     }
 }
@@ -181,21 +179,7 @@ function initAirportCalc() {
 
     function updateAirportPrice() {
         if (!priceDisplay) return;
-        let base = 200;
-
-        if (destination && destination.value === 'palmeraie') {
-            base = 250;
-        } else if (destination && destination.value === 'agafay') {
-            base = 500;
-        }
-
-        if (transferType && transferType.value === 'roundtrip') {
-            base = base * 1.85;
-        }
-
-        const totalFormatted = Math.round(base) + ' DH';
-        priceDisplay.innerText = totalFormatted;
-        return totalFormatted;
+        priceDisplay.innerHTML = `<span class="price-whatsapp-tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg> Prix sur WhatsApp</span>`;
     }
 
     if (transferType) transferType.addEventListener('change', updateAirportPrice);
@@ -204,13 +188,12 @@ function initAirportCalc() {
 
     if (bookBtn) {
         bookBtn.addEventListener('click', function() {
-            const total = updateAirportPrice();
             sendWhatsAppBooking('Airport Transfer Booking', {
                 'Type': transferType ? transferType.options[transferType.selectedIndex].text : 'One Way',
                 'Area': destination ? destination.options[destination.selectedIndex].text : 'Marrakech Medina',
                 'Flight Date': dateInput ? dateInput.value : 'Upcoming',
                 'Passengers': (peopleInput ? peopleInput.value : '2') + ' pax'
-            }, total);
+            });
         });
     }
 }
@@ -226,21 +209,7 @@ function initCityGuideCalc() {
 
     function updateGuidePrice() {
         if (!priceDisplay) return;
-        let base = 300;
-
-        const opt = optionSelect ? optionSelect.value : 'with-guide';
-        const dur = durationSelect ? durationSelect.value : 'half';
-
-        if (opt === 'with-guide') {
-            base += 250;
-        }
-        if (dur === 'full') {
-            base *= 1.7;
-        }
-
-        const totalFormatted = Math.round(base) + ' DH';
-        priceDisplay.innerText = totalFormatted;
-        return totalFormatted;
+        priceDisplay.innerHTML = `<span class="price-whatsapp-tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg> Prix sur WhatsApp</span>`;
     }
 
     if (optionSelect) optionSelect.addEventListener('change', updateGuidePrice);
@@ -249,13 +218,12 @@ function initCityGuideCalc() {
 
     if (bookBtn) {
         bookBtn.addEventListener('click', function() {
-            const total = updateGuidePrice();
             sendWhatsAppBooking('Marrakech Guided City Tour', {
                 'Service': optionSelect ? optionSelect.options[optionSelect.selectedIndex].text : 'With Guide',
                 'Duration': durationSelect ? durationSelect.options[durationSelect.selectedIndex].text : 'Half Day',
                 'Tour Date': dateInput ? dateInput.value : 'Upcoming',
                 'People': (peopleInput ? peopleInput.value : '2') + ' pax'
-            }, total);
+            });
         });
     }
 }
@@ -269,23 +237,9 @@ function initQuadCalc() {
     const priceDisplay = document.getElementById('quad-price-val');
     const bookBtn = document.getElementById('btn-book-quad');
 
-    const rates = {
-        'palmeraie': 450,
-        'agafay-sunset': 700,
-        'agafay-dinner': 900,
-        'buggy-safari': 1200
-    };
-
     function updateQuadPrice() {
         if (!priceDisplay) return;
-        const pkg = packageSelect ? packageSelect.value : 'palmeraie';
-        const rate = rates[pkg] || 450;
-        const count = parseInt(peopleInput ? peopleInput.value : 1) || 1;
-
-        let total = rate * count;
-        const totalFormatted = total.toLocaleString() + ' DH';
-        priceDisplay.innerText = totalFormatted;
-        return totalFormatted;
+        priceDisplay.innerHTML = `<span class="price-whatsapp-tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg> Prix sur WhatsApp</span>`;
     }
 
     if (packageSelect) packageSelect.addEventListener('change', updateQuadPrice);
@@ -294,13 +248,12 @@ function initQuadCalc() {
 
     if (bookBtn) {
         bookBtn.addEventListener('click', function() {
-            const total = updateQuadPrice();
             sendWhatsAppBooking('Quad & Buggy Biking Reservation', {
                 'Package': packageSelect ? packageSelect.options[packageSelect.selectedIndex].text : 'Palmeraie Quad',
                 'Date': dateInput ? dateInput.value : 'Upcoming',
                 'Quads / Persons': (peopleInput ? peopleInput.value : '2') + ' pax',
                 'Time Slot': slotSelect ? slotSelect.value : 'Sunset'
-            }, total);
+            });
         });
     }
 }
@@ -314,22 +267,9 @@ function initBalloonCalc() {
     const priceDisplay = document.getElementById('balloon-price-val');
     const bookBtn = document.getElementById('btn-book-balloon');
 
-    const rates = {
-        'classic': 1800,
-        'royal': 2400,
-        'vip': 3200
-    };
-
     function updateBalloonPrice() {
         if (!priceDisplay) return;
-        const pkg = packageSelect ? packageSelect.value : 'classic';
-        const rate = rates[pkg] || 1800;
-        const count = parseInt(peopleInput ? peopleInput.value : 1) || 1;
-
-        let total = rate * count;
-        const totalFormatted = total.toLocaleString() + ' DH';
-        priceDisplay.innerText = totalFormatted;
-        return totalFormatted;
+        priceDisplay.innerHTML = `<span class="price-whatsapp-tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg> Prix sur WhatsApp</span>`;
     }
 
     if (packageSelect) packageSelect.addEventListener('change', updateBalloonPrice);
@@ -338,13 +278,12 @@ function initBalloonCalc() {
 
     if (bookBtn) {
         bookBtn.addEventListener('click', function() {
-            const total = updateBalloonPrice();
             sendWhatsAppBooking('Hot Air Balloon Flight Reservation', {
                 'Package': packageSelect ? packageSelect.options[packageSelect.selectedIndex].text : 'Classic Sunrise Flight',
                 'Flight Date': dateInput ? dateInput.value : 'Upcoming',
                 'Passengers': (peopleInput ? peopleInput.value : '2') + ' Passengers',
                 'Pickup Area': pickupSelect ? pickupSelect.value : 'Marrakech Medina'
-            }, total);
+            });
         });
     }
 }
@@ -360,22 +299,7 @@ function initGolfCalc() {
 
     function updateGolfPrice() {
         if (!priceDisplay) return;
-        const course = courseSelect ? courseSelect.value : 'Royal Golf Marrakech';
-        let baseRate = 850;
-        if (course.includes('Amelkis')) baseRate = 950;
-        if (course.includes('Assoufid')) baseRate = 1200;
-        if (course.includes('PalmGolf')) baseRate = 900;
-
-        const addon = addonsSelect ? addonsSelect.value : 'none';
-        if (addon === 'buggy') baseRate += 300;
-        if (addon === 'full') baseRate += 550;
-
-        const players = parseInt(peopleInput ? peopleInput.value : 1) || 1;
-        let total = baseRate * players;
-
-        const totalFormatted = total.toLocaleString() + ' DH';
-        priceDisplay.innerText = totalFormatted;
-        return totalFormatted;
+        priceDisplay.innerHTML = `<span class="price-whatsapp-tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg> Prix sur WhatsApp</span>`;
     }
 
     if (courseSelect) courseSelect.addEventListener('change', updateGolfPrice);
@@ -385,18 +309,17 @@ function initGolfCalc() {
 
     if (bookBtn) {
         bookBtn.addEventListener('click', function() {
-            const total = updateGolfPrice();
             sendWhatsAppBooking('Golf Booking Reservation', {
                 'Course': courseSelect ? courseSelect.value : 'Royal Golf Marrakech',
                 'Game Date': dateInput ? dateInput.value : 'Upcoming',
                 'Players': (peopleInput ? peopleInput.value : '2') + ' Players',
                 'Add-ons': addonsSelect ? addonsSelect.options[addonsSelect.selectedIndex].text : 'Green fee only'
-            }, total);
+            });
         });
     }
 }
 
-// 8. Multi-Service Combo Package Builder Section (-15% OFF)
+// 8. Multi-Service Combo Package Builder Section
 function initBundleCalc() {
     const bundleCheckboxes = document.querySelectorAll('.combo-section-cb');
     const dateInput = document.getElementById('combo-date');
@@ -410,6 +333,8 @@ function initBundleCalc() {
     const finalDisplay = document.getElementById('combo-final-val');
     const openDossierBtn = document.getElementById('btn-open-dossier');
 
+    const badgeSvg = `<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg> Sur Devis`;
+
     function calculateItemDetails(serviceId, people) {
         let name = '';
         let subOptionText = '';
@@ -420,137 +345,99 @@ function initBundleCalc() {
                 const typeEl = document.getElementById('combo-opt-airport-type');
                 const destEl = document.getElementById('combo-opt-airport-dest');
                 const flightEl = document.getElementById('combo-opt-airport-flight');
-                let base = 200;
-                if (destEl && destEl.value === 'palmeraie') base += 50;
-                if (destEl && destEl.value === 'agafay') base += 300;
-                if (typeEl && typeEl.value === 'roundtrip') base *= 1.85;
 
-                itemTotal = Math.round(base);
                 name = 'VIP Airport Transfer (' + (destEl ? destEl.options[destEl.selectedIndex].text : 'Medina') + ')';
                 subOptionText = (typeEl ? typeEl.options[typeEl.selectedIndex].text : 'One Way') + (flightEl && flightEl.value ? ' • Vol: ' + flightEl.value : '');
                 
                 const tagEl = document.getElementById('price-tag-airport');
-                if (tagEl) tagEl.innerText = '+' + itemTotal + ' DH';
+                if (tagEl) tagEl.innerHTML = badgeSvg;
                 break;
             }
             case 'transfer': {
                 const fromEl = document.getElementById('combo-opt-transfer-from');
                 const destEl = document.getElementById('combo-opt-transfer-dest');
                 const vehEl = document.getElementById('combo-opt-transfer-vehicle');
-                const destPrices = { 'Ourika Valley': 350, 'Essaouira Beach': 650, 'Ouarzazate Kasbahs': 900, 'Agadir Coast': 1100, 'Casablanca': 1200, 'Merzouga Desert': 2400 };
                 const chosenDest = destEl ? destEl.value : 'Ourika Valley';
-                let base = destPrices[chosenDest] || 350;
-                if (vehEl && vehEl.value === 'minibus') base *= 1.4;
-                if (vehEl && vehEl.value === 'vip') base *= 1.8;
 
-                itemTotal = Math.round(base);
                 name = 'Medina Transfer (' + (fromEl ? fromEl.value : 'Marrakech') + ' → ' + chosenDest + ')';
                 subOptionText = 'Véhicule: ' + (vehEl ? vehEl.options[vehEl.selectedIndex].text : 'Minivan');
 
                 const tagEl = document.getElementById('price-tag-transfer');
-                if (tagEl) tagEl.innerText = '+' + itemTotal + ' DH';
+                if (tagEl) tagEl.innerHTML = badgeSvg;
                 break;
             }
             case 'circuit': {
                 const routeEl = document.getElementById('combo-opt-circuit-route');
                 const daysEl = document.getElementById('combo-opt-circuit-days');
                 const vehEl = document.getElementById('combo-opt-circuit-veh');
-
                 const days = parseInt(daysEl ? daysEl.value : 3) || 3;
-                let dailyRate = (vehEl && vehEl.value.includes('VIP')) ? 1400 : 1200;
-                itemTotal = days * dailyRate;
 
                 name = 'Multi-City Circuit (' + (routeEl ? routeEl.value : 'Morocco Tour') + ')';
                 subOptionText = days + ' Jours • ' + (vehEl ? vehEl.value : '4x4') + ' avec chauffeur privé';
 
                 const tagEl = document.getElementById('price-tag-circuit');
-                if (tagEl) tagEl.innerText = '+' + itemTotal.toLocaleString() + ' DH';
+                if (tagEl) tagEl.innerHTML = badgeSvg;
                 break;
             }
             case 'guide': {
                 const typeEl = document.getElementById('combo-opt-guide-type');
                 const durEl = document.getElementById('combo-opt-guide-dur');
-                let base = 550;
-                if (typeEl && typeEl.value === 'Private Driver Only') base = 300;
-                if (durEl && durEl.value.includes('Full Day')) base *= 1.7;
 
-                itemTotal = Math.round(base);
                 name = 'Historical Medina Guided Tour';
                 subOptionText = (typeEl ? typeEl.value : 'With Guide') + ' • ' + (durEl ? durEl.value : 'Half Day');
 
                 const tagEl = document.getElementById('price-tag-guide');
-                if (tagEl) tagEl.innerText = '+' + itemTotal + ' DH';
+                if (tagEl) tagEl.innerHTML = badgeSvg;
                 break;
             }
             case 'quad': {
                 const pkgEl = document.getElementById('combo-opt-quad-pkg');
                 const slotEl = document.getElementById('combo-opt-quad-slot');
-                const pkgRates = { 'Palmeraie Quad 2h': 450, 'Agafay Sunset Quad + Camel': 700, 'Agafay Quad + Camel + Dinner Show': 900, 'Buggy 2-Seater Safari': 1200 };
                 const chosenPkg = pkgEl ? pkgEl.value : 'Agafay Sunset Quad + Camel';
-                const rate = pkgRates[chosenPkg] || 700;
-
-                // If Palmeraie or Buggy, charged per unit, else per pax
-                if (chosenPkg.includes('Buggy')) {
-                    itemTotal = rate * Math.ceil(people / 2);
-                } else if (chosenPkg.includes('Palmeraie')) {
-                    itemTotal = rate * people;
-                } else {
-                    itemTotal = rate * people;
-                }
 
                 name = chosenPkg;
                 subOptionText = 'Taux: ' + (slotEl ? slotEl.value : 'Sunset') + ' • ' + people + ' Pax';
 
                 const tagEl = document.getElementById('price-tag-quad');
-                if (tagEl) tagEl.innerHTML = '+' + rate.toLocaleString() + ' DH<small>/' + (chosenPkg.includes('Buggy') ? 'buggy' : 'pax') + '</small>';
+                if (tagEl) tagEl.innerHTML = badgeSvg;
                 break;
             }
             case 'balloon': {
                 const pkgEl = document.getElementById('combo-opt-balloon-pkg');
-                const rates = { 'Classic Sunrise + Berber Breakfast': 1800, 'Royal Compartment Sunrise Flight': 2400, 'VIP Private Basket + Champagne': 3200 };
                 const chosen = pkgEl ? pkgEl.value : 'Classic Sunrise + Berber Breakfast';
-                const rate = rates[chosen] || 1800;
 
-                itemTotal = rate * people;
                 name = 'Hot Air Balloon Sunrise Flight (' + chosen + ')';
                 subOptionText = people + ' Passagers • Transport Riad inclus';
 
                 const tagEl = document.getElementById('price-tag-balloon');
-                if (tagEl) tagEl.innerHTML = '+' + rate.toLocaleString() + ' DH<small>/pax</small>';
+                if (tagEl) tagEl.innerHTML = badgeSvg;
                 break;
             }
             case 'sahara': {
                 const stdEl = document.getElementById('combo-opt-sahara-std');
-                const rate = (stdEl && stdEl.value.includes('Royal')) ? 3400 : 2400;
 
-                itemTotal = rate * people;
                 name = '3-Day Merzouga Sahara Desert Tour';
                 subOptionText = (stdEl ? stdEl.options[stdEl.selectedIndex].text : 'Luxury Camp') + ' • ' + people + ' Pax';
 
                 const tagEl = document.getElementById('price-tag-sahara');
-                if (tagEl) tagEl.innerHTML = '+' + rate.toLocaleString() + ' DH<small>/pax</small>';
+                if (tagEl) tagEl.innerHTML = badgeSvg;
                 break;
             }
             case 'golf': {
                 const courseEl = document.getElementById('combo-opt-golf-course');
                 const addonEl = document.getElementById('combo-opt-golf-addon');
-                const coursePrices = { 'Royal Golf Marrakech': 850, 'Amelkis Golf Club': 950, 'Assoufid Golf Club': 1200, 'PalmGolf Palmeraie': 900 };
                 const chosenCourse = courseEl ? courseEl.value : 'Royal Golf Marrakech';
-                let rate = coursePrices[chosenCourse] || 850;
-                if (addonEl && addonEl.value.includes('Buggy & Clubs')) rate += 550;
-                else if (addonEl && addonEl.value.includes('Buggy')) rate += 300;
 
-                itemTotal = rate * people;
                 name = 'Golf: ' + chosenCourse;
                 subOptionText = (addonEl ? addonEl.value : 'Green fee') + ' • ' + people + ' Joueurs';
 
                 const tagEl = document.getElementById('price-tag-golf');
-                if (tagEl) tagEl.innerHTML = '+' + rate.toLocaleString() + ' DH<small>/joueur</small>';
+                if (tagEl) tagEl.innerHTML = badgeSvg;
                 break;
             }
         }
 
-        return { name, subOptionText, itemTotal };
+        return { name, subOptionText, itemTotal: 0 };
     }
 
     function updateBundleSection() {
@@ -576,7 +463,7 @@ function initBundleCalc() {
 
                 if (selectedListEl) {
                     const li = document.createElement('li');
-                    li.innerHTML = `<strong>${details.name}</strong> <small style="color:#777;">(${details.itemTotal.toLocaleString()} DH)</small>`;
+                    li.innerHTML = `<strong>${details.name}</strong> <small style="color:#15803d; font-weight:600;">(Sur Devis WhatsApp)</small>`;
                     selectedListEl.appendChild(li);
                 }
             } else {
@@ -585,24 +472,13 @@ function initBundleCalc() {
         });
 
         if (countDisplay) countDisplay.innerText = selectedCount;
-        if (subtotalDisplay) subtotalDisplay.innerText = subtotal.toLocaleString() + ' DH';
+        if (subtotalDisplay) subtotalDisplay.innerHTML = `<span class="price-whatsapp-tag">Prix sur WhatsApp</span>`;
+        if (discountRow) discountRow.style.display = 'none';
 
-        // 15% discount for 2 or more selected services
-        let discount = 0;
-        let finalPrice = subtotal;
-        if (selectedCount >= 2) {
-            discount = Math.round(subtotal * 0.15);
-            finalPrice = subtotal - discount;
-            if (discountRow) discountRow.style.display = 'flex';
-            if (discountDisplay) discountDisplay.innerText = '-' + discount.toLocaleString() + ' DH';
-        } else {
-            if (discountRow) discountRow.style.display = 'none';
-        }
+        const totalFormatted = 'Prix sur WhatsApp';
+        if (finalDisplay) finalDisplay.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg> Prix sur WhatsApp`;
 
-        const totalFormatted = Math.round(finalPrice).toLocaleString() + ' DH';
-        if (finalDisplay) finalDisplay.innerText = totalFormatted;
-
-        return { totalFormatted, selectedCount, subtotal, discount, detailedItems };
+        return { totalFormatted, selectedCount, subtotal, discount: 0, detailedItems };
     }
 
     bundleCheckboxes.forEach(cb => {
@@ -625,7 +501,7 @@ function initBundleCalc() {
     }
 
     function populateDossierModal() {
-        const { totalFormatted, detailedItems, selectedCount, discount, subtotal } = updateBundleSection();
+        const { detailedItems, selectedCount } = updateBundleSection();
         const dateVal = dateInput ? dateInput.value : 'Upcoming';
         const peopleVal = peopleInput ? peopleInput.value : '2';
         const hotelVal = hotelInput && hotelInput.value ? hotelInput.value : '';
@@ -642,7 +518,7 @@ function initBundleCalc() {
         if (hotelClientInput && hotelVal) hotelClientInput.value = hotelVal;
 
         const totalAmountEl = document.getElementById('modal-dossier-total-amount');
-        if (totalAmountEl) totalAmountEl.innerText = totalFormatted;
+        if (totalAmountEl) totalAmountEl.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg> Prix sur WhatsApp`;
 
         const itemsContainer = document.getElementById('modal-dossier-items-container');
         if (itemsContainer) {
@@ -658,23 +534,10 @@ function initBundleCalc() {
                             <span class="dossier-item-name">${item.name}</span>
                             <span class="dossier-item-sub">${item.subOptionText}</span>
                         </div>
-                        <span class="dossier-item-price">${item.itemTotal.toLocaleString()} DH</span>
+                        <span class="dossier-item-price text-success" style="font-weight:700;">Sur Devis WhatsApp</span>
                     `;
                     itemsContainer.appendChild(row);
                 });
-
-                if (selectedCount >= 2) {
-                    const discountRow = document.createElement('div');
-                    discountRow.className = 'dossier-item-row';
-                    discountRow.style.color = '#2e7d32';
-                    discountRow.innerHTML = `
-                        <div>
-                            <span class="dossier-item-name" style="color:#2e7d32;">🎉 Remise Spéciale Pack Multi-Services (15% OFF)</span>
-                        </div>
-                        <span class="dossier-item-price" style="color:#2e7d32;">-${discount.toLocaleString()} DH</span>
-                    `;
-                    itemsContainer.appendChild(discountRow);
-                }
             }
         }
 
@@ -700,11 +563,11 @@ function initBundleCalc() {
 
             const dateVal = dateInput ? dateInput.value : 'Upcoming';
             const peopleVal = peopleInput ? peopleInput.value : '2';
-            const { totalFormatted, detailedItems, discount, selectedCount } = updateBundleSection();
+            const { detailedItems } = updateBundleSection();
 
             // Format comprehensive structured WhatsApp Booking Dossier
             let message = `*📋 NOUVEAU DOSSIER DE RÉSERVATION (#${refId})*\n`;
-            message += `*Agence GlobeTrek Marrakech Travel*\n`;
+            message += `*Agence VibeKech Marrakech*\n`;
             message += `━━━━━━━━━━━━━━━━━━━━━\n\n`;
 
             message += `👤 *INFORMATIONS CLIENT:*\n`;
@@ -719,22 +582,30 @@ function initBundleCalc() {
             message += `• *Date de voyage:* ${dateVal}\n`;
             message += `• *Nombre de personnes:* ${peopleVal} personnes\n\n`;
 
-            message += `🎯 *SERVICES RÉSERVÉS DANS LE PACK:*\n`;
+            message += `🎯 *SERVICES SÉLECTIONNÉS:*\n`;
             detailedItems.forEach((it, idx) => {
-                message += `${idx + 1}. *${it.name}* (${it.itemTotal} DH)\n   └ _${it.subOptionText}_\n`;
+                message += `${idx + 1}. *${it.name}*\n   └ _${it.subOptionText}_\n`;
             });
 
-            if (selectedCount >= 2) {
-                message += `\n🎁 *REMISE PACK APPLIQUÉE:* -${discount} DH (15% OFF)\n`;
-            }
-            message += `\n💰 *TOTAL NET À PAYER SUR PLACE:* *${totalFormatted}*\n`;
+            message += `\n💰 *TARIF:* Devis personnalisé sur WhatsApp\n`;
             message += `━━━━━━━━━━━━━━━━━━━━━\n`;
-            message += `👉 *Demande de confirmation automatique par GlobeTrek Team.*`;
+            message += `👉 *Demande envoyée pour confirmation et devis rapide.*`;
 
-            const whatsappUrl = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(message)}`;
+            // Send Auto Notification Email in Background
+            sendAutoNotification({
+                "_subject": `🔔 NOUVEAU DOSSIER DE RÉSERVATION (#${refId})`,
+                "Ref_Dossier": refId,
+                "Nom_Client": clientName,
+                "Telephone_WhatsApp": clientPhone,
+                "Email_Client": clientEmail,
+                "Riad_Hotel": clientHotel,
+                "Date_Voyage": dateVal,
+                "Participants": peopleVal + ' personnes',
+                "Services_Details": detailedItems.map(it => `${it.name} (${it.subOptionText})`).join(' | '),
+                "Remarques": clientNotes || 'Aucune'
+            });
 
-            // Trigger WhatsApp
-            window.open(whatsappUrl, '_blank');
+            const whatsappUrl = openWhatsApp(WHATSAPP_PHONE, message);
 
             // Switch to Success Confirmation Step
             const stepForm = document.getElementById('dossier-step-form');
@@ -821,7 +692,20 @@ function initTailorMadeForm() {
         }
         message += `\n👉 Please send me the custom itinerary and quotation.`;
 
-        window.open(`https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(message)}`, '_blank');
+        // Send Auto Notification Email for Custom Tour
+        sendAutoNotification({
+            "_subject": `✨ NOUVELLE DEMANDE VOYAGE SUR MESURE - ${name}`,
+            "Nom_Client": name,
+            "Telephone_WhatsApp": phone,
+            "Duree_Jours": days + ' Jours',
+            "Nombre_Voyageurs": travelers + ' Personnes',
+            "Destinations": selectedDests.join(', ') || 'Tout le Maroc',
+            "Style_Voyage": selectedStyle,
+            "Hebergement": selectedHotel,
+            "Remarques": notes || 'Aucune'
+        });
+
+        openWhatsApp(WHATSAPP_PHONE, message);
     });
 }
 
@@ -862,8 +746,59 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+
+    // ==========================================================================
+    // Smart Floating WhatsApp Concierge Widget Logic
+    // ==========================================================================
+    const waTriggerBtn = document.getElementById('smart-wa-trigger');
+    const waPopup = document.getElementById('smart-wa-popup');
+    const waCloseBtn = document.getElementById('smart-wa-close');
+    const waSendBtn = document.getElementById('smart-wa-send-btn');
+    const waInput = document.getElementById('smart-wa-input');
+
+    if (waTriggerBtn && waPopup) {
+        waTriggerBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            waPopup.classList.toggle('open');
+            if (waPopup.classList.contains('open') && waInput) {
+                setTimeout(() => waInput.focus(), 150);
+            }
+        });
+
+        if (waCloseBtn) {
+            waCloseBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                waPopup.classList.remove('open');
+            });
+        }
+
+        document.addEventListener('click', (e) => {
+            if (!waPopup.contains(e.target) && !waTriggerBtn.contains(e.target)) {
+                waPopup.classList.remove('open');
+            }
+        });
+
+        const sendCustomMessage = () => {
+            const userText = (waInput ? waInput.value : '').trim();
+            if (userText) {
+                openWhatsApp(WHATSAPP_PHONE, 'Bonjour VibeKech! ' + userText);
+                if (waInput) waInput.value = '';
+                waPopup.classList.remove('open');
+            }
+        };
+
+        if (waSendBtn) {
+            waSendBtn.addEventListener('click', sendCustomMessage);
+        }
+
+        if (waInput) {
+            waInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    sendCustomMessage();
+                }
+            });
+        }
+    }
 });
-
-
-
 

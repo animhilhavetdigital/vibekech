@@ -8,9 +8,9 @@ const moroccoDestinationsData: GalleryItem[] = [
     tag: '15 Activities',
     description: 'Quad biking, camel riding, buggy safaris & luxury desert camp dinners under the stars.',
     photo: {
-      url: './herophoto/parker-hilton-0gHcDpcYxOI-unsplash.jpg',
-      text: 'Agafay desert camp at dusk with camels and nomadic tents',
-      by: 'Parker Hilton'
+      url: './herophoto/agafay-scarabeo-camp.webp',
+      text: 'Agafay luxury desert camp at dusk with camels and nomadic tents',
+      by: 'True Kech Tours'
     }
   },
   {
@@ -19,9 +19,9 @@ const moroccoDestinationsData: GalleryItem[] = [
     tag: '8 Circuits',
     description: 'Multi-day private road trips through Ouarzazate, Dades Gorges & Merzouga Sahara.',
     photo: {
-      url: './herophoto/alex-azabache-H0eV-0CRpOE-unsplash.jpg',
+      url: './herophoto/merzouga-golden-dunes.webp',
       text: 'Sahara sand dunes under sunset golden hour',
-      by: 'Alex Azabache'
+      by: 'True Kech Tours'
     }
   },
   {
@@ -30,9 +30,9 @@ const moroccoDestinationsData: GalleryItem[] = [
     tag: '6 Destinations',
     description: 'Day trips to Essaouira beach, ancient ramparts & fresh seafood dining.',
     photo: {
-      url: './herophoto/oussama-abouchatir-PcPoCsFj4mQ-unsplash.jpg',
-      text: 'Essaouira fortress with turquoise Atlantic ocean',
-      by: 'Oussama Abouchatir'
+      url: './herophoto/taghazout-agadir-coast.webp',
+      text: 'Atlantic coastal fortress and scenic turquoise ocean',
+      by: 'True Kech Tours'
     }
   },
   {
@@ -41,9 +41,9 @@ const moroccoDestinationsData: GalleryItem[] = [
     tag: '12 Tours',
     description: 'Bahia Palace, Majorelle, Saadian Tombs & secret souks with official licensed guides.',
     photo: {
-      url: './herophoto/miltiadis-fragkidis-CWyFVt0V-HI-unsplash.jpg',
-      text: 'Historic riad architecture with courtyard fountain',
-      by: 'Miltiadis Fragkidis'
+      url: './herophoto/koutoubia-sunrise-marrakech.webp',
+      text: 'Historic Koutoubia mosque at sunrise and Medina',
+      by: 'True Kech Tours'
     }
   },
   {
@@ -58,14 +58,14 @@ const moroccoDestinationsData: GalleryItem[] = [
     }
   },
   {
-    common: 'Ourika Valley & Atlas',
-    binomial: 'High Atlas Mountain Valleys',
+    common: 'Imperial Palaces & Bahia',
+    binomial: 'Moroccan Royal Architecture',
     tag: '5 Excursions',
-    description: 'High Atlas Mountain trails, traditional Berber villages, rivers and Setti Fatma waterfalls.',
+    description: 'Intricate zellige tilework, cedarwood ceilings, and serene riad courtyards.',
     photo: {
-      url: './herophoto/zakariae-daoui-I2YeucCFOmw-unsplash.jpg',
-      text: 'Green Ourika valley with snow-capped Atlas backdrop',
-      by: 'Zakariae Daoui'
+      url: './herophoto/palacio-bahia-marrakech.webp',
+      text: 'Bahia Palace archways and authentic architecture',
+      by: 'True Kech Tours'
     }
   },
   {
@@ -85,9 +85,9 @@ const moroccoDestinationsData: GalleryItem[] = [
     tag: 'Best Seller',
     description: 'Sunset camel ride dressed in traditional cheche scarf and guided quad trails through oasis palm groves.',
     photo: {
-      url: './herophoto/ignacio-ceballos-eP94dHUaY1U-unsplash.jpg',
-      text: 'Sunset quad biking in Marrakech Palmeraie',
-      by: 'Ignacio Ceballos'
+      url: './herophoto/sahara-camel-caravan.webp',
+      text: 'Sunset camel caravan safari in Morocco',
+      by: 'True Kech Tours'
     }
   }
 ];

@@ -3875,5 +3875,653 @@
     }
 }
 
+/* WhatsApp Price Badges & Inquire Tags */
+.gyg-price-tag .amount.whatsapp-price,
+.price-whatsapp-tag,
+.whatsapp-price-pill {
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    color: #15803d !important;
+    background: #f0fdf4 !important;
+    border: 1px solid #86efac !important;
+    padding: 4px 10px !important;
+    border-radius: 9999px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    white-space: nowrap !important;
+    text-transform: none !important;
+    box-shadow: 0 1px 3px rgba(22, 101, 52, 0.08);
+    transition: all 0.2s ease;
+}
+
+.gyg-price-tag .amount.whatsapp-price:hover,
+.price-whatsapp-tag:hover {
+    background: #dcfce7 !important;
+    border-color: #4ade80 !important;
+    transform: translateY(-1px);
+}
+
+.gyg-price-tag.whatsapp-tag .from {
+    display: none !important;
+}
+
+/* ==========================================================================
+   Interactive Floating Smart WhatsApp Concierge Widget
+   ========================================================================== */
+.smart-wa-widget {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    z-index: 999999;
+    font-family: inherit;
+}
+
+.smart-wa-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+    color: #ffffff !important;
+    padding: 12px 18px 12px 14px;
+    border-radius: 50px;
+    box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4), 0 4px 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    border: none;
+    outline: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+}
+
+.smart-wa-btn:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 15px 35px rgba(37, 211, 102, 0.5);
+}
+
+.smart-wa-avatar-wrap {
+    position: relative;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.smart-wa-avatar-wrap svg {
+    width: 24px;
+    height: 24px;
+    fill: #25D366;
+}
+
+.smart-wa-pulse-dot {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    width: 11px;
+    height: 11px;
+    background: #22c55e;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    animation: waPulse 2s infinite;
+}
+
+@keyframes waPulse {
+    0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+    70% { box-shadow: 0 0 0 8px rgba(34, 197, 94, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+}
+
+.smart-wa-text-wrap {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+}
+
+.smart-wa-title {
+    font-size: 13.5px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.smart-wa-sub {
+    font-size: 11px;
+    opacity: 0.9;
+    font-weight: 400;
+}
+
+/* WhatsApp Chat Window Modal */
+.smart-wa-popup {
+    position: absolute;
+    bottom: 70px;
+    right: 0;
+    width: 340px;
+    max-width: calc(100vw - 40px);
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.22);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    display: none;
+    flex-direction: column;
+    animation: popupFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    transform-origin: bottom right;
+}
+
+@keyframes popupFadeIn {
+    from { opacity: 0; transform: scale(0.88) translateY(15px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.smart-wa-popup.open {
+    display: flex;
+}
+
+.smart-wa-header {
+    background: linear-gradient(135deg, #128C7E 0%, #075E54 100%);
+    padding: 16px 18px;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.smart-wa-header-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.smart-wa-header-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.smart-wa-header-avatar svg {
+    width: 26px;
+    height: 26px;
+    fill: #128C7E;
+}
+
+.smart-wa-header-name {
+    font-size: 15px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.smart-wa-header-status {
+    font-size: 11px;
+    opacity: 0.9;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.smart-wa-header-status span {
+    width: 7px;
+    height: 7px;
+    background: #4ade80;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.smart-wa-close-btn {
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+}
+
+.smart-wa-close-btn:hover {
+    opacity: 1;
+}
+
+.smart-wa-body {
+    padding: 16px;
+    background: #efeae2;
+    background-image: radial-gradient(#d1d7db 1px, transparent 1px);
+    background-size: 12px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 380px;
+    overflow-y: auto;
+}
+
+.smart-wa-bubble {
+    background: #ffffff;
+    padding: 12px 14px;
+    border-radius: 0 14px 14px 14px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    font-size: 13px;
+    line-height: 1.45;
+    color: #1f2937;
+}
+
+.smart-wa-bubble strong {
+    color: #075E54;
+}
+
+.smart-wa-quick-chips {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.smart-wa-chip {
+    background: #ffffff;
+    border: 1px solid #d1fae5;
+    color: #065f46;
+    padding: 8px 12px;
+    border-radius: 12px;
+    font-size: 12.5px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+    text-decoration: none;
+}
+
+.smart-wa-chip:hover {
+    background: #dcfce7;
+    border-color: #34d399;
+    transform: translateX(3px);
+    color: #065f46;
+}
+
+.smart-wa-footer {
+    padding: 12px 14px;
+    background: #ffffff;
+    border-top: 1px solid #f3f4f6;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.smart-wa-input {
+    flex: 1;
+    border: 1px solid #e5e7eb;
+    border-radius: 24px;
+    padding: 9px 14px;
+    font-size: 13px;
+    outline: none;
+    transition: border 0.2s;
+}
+
+.smart-wa-input:focus {
+    border-color: #25D366;
+}
+
+.smart-wa-send-btn {
+    background: #25D366;
+    color: #ffffff;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    flex-shrink: 0;
+}
+
+.smart-wa-send-btn:hover {
+    background: #1eb954;
+    transform: scale(1.08);
+}
+
+/* ==========================================================================
+   Hero Instant Live Search Bar
+   ========================================================================== */
+.hero-search-wrapper {
+    max-width: 720px;
+    margin: 25px auto 0 auto;
+    position: relative;
+    z-index: 30;
+}
+
+.hero-search-box {
+    background: #ffffff;
+    padding: 8px 10px 8px 20px;
+    border-radius: 60px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    transition: all 0.3s ease;
+}
+
+.hero-search-box:focus-within {
+    box-shadow: 0 20px 45px rgba(235, 102, 43, 0.25);
+    border-color: #eb662b;
+}
+
+.hero-search-icon {
+    color: #eb662b;
+    font-size: 18px;
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+
+.hero-search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    font-weight: 500;
+    color: #1f2937;
+    background: transparent;
+}
+
+.hero-search-input::placeholder {
+    color: #9ca3af;
+    font-weight: 400;
+}
+
+.hero-search-btn {
+    background: #eb662b;
+    color: #ffffff;
+    border: none;
+    padding: 11px 24px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.hero-search-btn:hover {
+    background: #d45119;
+    transform: translateY(-1px);
+}
+
+.hero-search-dropdown {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    border-radius: 18px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18);
+    border: 1px solid #f3f4f6;
+    max-height: 360px;
+    overflow-y: auto;
+    display: none;
+    z-index: 100;
+    padding: 10px 0;
+}
+
+.hero-search-dropdown.show {
+    display: block;
+}
+
+.hero-search-item {
+    padding: 10px 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+    color: #1f2937;
+    transition: background 0.2s;
+}
+
+.hero-search-item:hover {
+    background: #f9fafb;
+}
+
+.hero-search-item-img {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.hero-search-item-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0 0 2px 0;
+}
+
+.hero-search-item-meta {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+/* ==========================================================================
+   Trust & Reviews Bar Section
+   ========================================================================== */
+.trust-bar-section {
+    background: #ffffff;
+    border-bottom: 1px solid #f3f4f6;
+    padding: 24px 0;
+}
+
+.trust-badges-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    align-items: center;
+}
+
+.trust-badge-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 16px;
+    border-radius: 16px;
+    background: #fdfdfd;
+    border: 1px solid #f3f4f6;
+    transition: all 0.25s ease;
+}
+
+.trust-badge-item:hover {
+    background: #fef8f4;
+    border-color: #fed7aa;
+    transform: translateY(-2px);
+}
+
+.trust-badge-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+}
+
+.trust-badge-text h6 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.trust-badge-text p {
+    margin: 2px 0 0 0;
+    font-size: 12px;
+    color: #6b7280;
+}
+
+/* ==========================================================================
+   VIBEKECH OFFICIAL BRAND COLOR SYSTEM (MATCHING LOGO COLORS)
+   - Primary VibeKech Logo Orange: #f58220
+   - Secondary VibeKech Logo Blue: #2b59c3
+   ========================================================================== */
+
+:root {
+    --vibekech-orange: #f58220 !important;
+    --vibekech-orange-dark: #e07010 !important;
+    --vibekech-blue: #2b59c3 !important;
+    --vibekech-blue-dark: #1e40a0 !important;
+}
+
+/* 1. Unified Pill Navbar CTA Button */
+.unified-nav-cta {
+    background: linear-gradient(135deg, #f58220 0%, #e07010 100%) !important;
+    box-shadow: 0 4px 15px rgba(245, 130, 32, 0.4) !important;
+    color: #ffffff !important;
+}
+.unified-nav-cta:hover {
+    background: linear-gradient(135deg, #e07010 0%, #c85e05 100%) !important;
+    box-shadow: 0 6px 20px rgba(245, 130, 32, 0.55) !important;
+}
+.unified-nav-item a:hover {
+    color: #f58220 !important;
+}
+.unified-nav-item.highlight-deal a {
+    color: #f58220 !important;
+}
+
+/* 2. Primary Site Buttons & CTAs */
+.tf-btn.primary,
+.tf-btn.brand,
+.btn-with-icon.brand,
+.calc-submit-btn:not(.whatsapp-btn-accent),
+.dossier-submit-btn,
+.btn-submit-dossier {
+    background: linear-gradient(135deg, #f58220 0%, #e07010 100%) !important;
+    border-color: #f58220 !important;
+    color: #ffffff !important;
+    box-shadow: 0 6px 18px rgba(245, 130, 32, 0.35) !important;
+}
+.tf-btn.primary:hover,
+.tf-btn.brand:hover,
+.btn-with-icon.brand:hover,
+.calc-submit-btn:not(.whatsapp-btn-accent):hover,
+.dossier-submit-btn:hover {
+    background: linear-gradient(135deg, #e07010 0%, #c85e05 100%) !important;
+    border-color: #e07010 !important;
+    box-shadow: 0 8px 25px rgba(245, 130, 32, 0.48) !important;
+}
+
+/* 3. Secondary Blue Accents (Palm Tree & Plane Royal Blue) */
+.badge-tour-status.top-pick,
+.gyg-card .gyg-badge,
+.tailor-option-box.selected {
+    border-color: #2b59c3 !important;
+}
+.tailor-option-box.selected .opt-icon-box {
+    background: linear-gradient(135deg, #2b59c3 0%, #1e40a0 100%) !important;
+    color: #ffffff !important;
+}
+
+/* 4. Active Tabs & Filter Pills */
+#activity-filter-pills .gyg-pill.active,
+.calc-tab-btn.active {
+    background: linear-gradient(135deg, #f58220 0%, #e07010 100%) !important;
+    border-color: #f58220 !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 12px rgba(245, 130, 32, 0.35) !important;
+}
+#activity-filter-pills .gyg-pill:hover:not(.active),
+.calc-tab-btn:hover:not(.active) {
+    border-color: #f58220 !important;
+    color: #f58220 !important;
+}
+
+/* 5. Highlight Text, Icons & Links */
+.title-info,
+.section-subtitle,
+.subtitle-info,
+.dossier-card-header h4,
+.text-primary,
+.badge-step {
+    color: #f58220 !important;
+}
+
+.icon-phone-box,
+.btn-icon-circle {
+    background: #ffffff !important;
+    color: #f58220 !important;
+}
+
+/* 6. Form Input Focus Glow */
+.dossier-input:focus,
+.calc-input:focus,
+.form-control:focus {
+    border-color: #f58220 !important;
+    box-shadow: 0 0 0 3px rgba(245, 130, 32, 0.2) !important;
+}
+
+/* ==========================================================================
+   Sahara & Activity Card Action Buttons (Equal flex layout & WhatsApp styling)
+   ========================================================================== */
+.sahara-action-buttons {
+    display: flex !important;
+    gap: 14px !important;
+    margin-top: 24px !important;
+    width: 100% !important;
+    align-items: center !important;
+}
+
+.sahara-action-buttons .calc-submit-btn {
+    flex: 1 1 50% !important;
+    height: 52px !important;
+    border-radius: 50px !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    text-decoration: none !important;
+    padding: 0 16px !important;
+    box-sizing: border-box !important;
+    white-space: nowrap !important;
+}
+
+.calc-submit-btn.whatsapp-btn-accent,
+.whatsapp-btn-accent {
+    background: linear-gradient(135deg, #25d366 0%, #128c7e 100%) !important;
+    background-color: #25d366 !important;
+    color: #ffffff !important;
+    border: none !important;
+    box-shadow: 0 6px 18px rgba(37, 211, 102, 0.35) !important;
+    transition: all 0.3s ease !important;
+}
+
+.calc-submit-btn.whatsapp-btn-accent:hover,
+.whatsapp-btn-accent:hover {
+    background: linear-gradient(135deg, #20ba5a 0%, #0f796c 100%) !important;
+    background-color: #20ba5a !important;
+    color: #ffffff !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 25px rgba(37, 211, 102, 0.48) !important;
+}
+
+@media (max-width: 768px) {
+    .sahara-action-buttons {
+        flex-direction: column !important;
+        gap: 12px !important;
+    }
+    .sahara-action-buttons .calc-submit-btn {
+        width: 100% !important;
+        flex: 1 1 100% !important;
+    }
+}
+
 
 
