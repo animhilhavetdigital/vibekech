@@ -5,7 +5,9 @@
   "main": "index.html",
   "scripts": {
     "dev": "npx live-server --port=3000 --open=index.html",
-    "start": "npx live-server --port=3000 --open=index.html"
+    "start": "npx live-server --port=3000 --open=index.html",
+    "build": "echo 'Static site ready'",
+    "vercel-build": "echo 'Static site ready'"
   },
   "keywords": [],
   "author": "",
