@@ -4523,5 +4523,66 @@
     }
 }
 
+/* ==========================================================================
+   Clay / Warm Terracotta Benefits Section
+   ========================================================================== */
+.tf-benefit.bg-clay-terracotta {
+    background: linear-gradient(180deg, #FAF1E8 0%, #F5EBE1 100%) !important;
+    background-color: #F5EBE1 !important;
+    position: relative;
+    border-top: 1px solid rgba(220, 165, 70, 0.15);
+    border-bottom: 1px solid rgba(220, 165, 70, 0.15);
+}
+
+.tf-benefit.bg-clay-terracotta .box-title .title {
+    color: #1a1a1a !important;
+    font-weight: 700 !important;
+}
+
+.tf-benefit.bg-clay-terracotta .box-title .subtitle {
+    color: #635548 !important;
+    font-size: 16px !important;
+}
+
+.tf-benefit.bg-clay-terracotta .box-icon-benefits {
+    background: #ffffff !important;
+    border: 1px solid rgba(214, 180, 150, 0.3) !important;
+    box-shadow: 0 8px 24px rgba(90, 60, 40, 0.05) !important;
+    border-radius: 20px !important;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.tf-benefit.bg-clay-terracotta .box-icon-benefits:hover {
+    transform: translateY(-6px) !important;
+    box-shadow: 0 16px 36px rgba(184, 115, 51, 0.15) !important;
+    border-color: rgba(220, 140, 70, 0.4) !important;
+}
+
+.tf-benefit.bg-clay-terracotta .box-icon-benefits .wrap-icon {
+    background: #FAF3EC !important;
+    border-radius: 16px !important;
+    border: 1px solid rgba(220, 165, 70, 0.2) !important;
+}
+
+.tf-benefit.bg-clay-terracotta .box-icon-benefits:hover .wrap-icon {
+    background: #e88d44 !important;
+}
+
+.tf-benefit.bg-clay-terracotta .box-icon-benefits .name a {
+    color: #1a1a1a !important;
+    font-weight: 700 !important;
+    transition: color 0.2s ease;
+}
+
+.tf-benefit.bg-clay-terracotta .box-icon-benefits:hover .name a {
+    color: #e88d44 !important;
+}
+
+.tf-benefit.bg-clay-terracotta .box-icon-benefits .desc {
+    color: #5c5249 !important;
+    line-height: 1.55 !important;
+}
+
+
 
 
