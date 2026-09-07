@@ -1,9 +1,9 @@
-# Robots.txt for True Kech Tours Marrakech
+# Robots.txt for VibeKech Marrakech
 User-agent: *
 Allow: /
 Disallow: /backend/
 Disallow: /tmp/
 
 # Host & Sitemap
-Host: https://truekechtours.com
-Sitemap: https://truekechtours.com/sitemap.xml
+Host: https://vibekech.com
+Sitemap: https://vibekech.com/sitemap.xml

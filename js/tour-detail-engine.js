@@ -3,7 +3,7 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    const WHATSAPP_PHONE = '212659672184';
+    const WHATSAPP_PHONE = '212663040642';
 
     function sendAutoNotification(data) {
         const notificationEmail = 'vibekechcontact@gmail.com';

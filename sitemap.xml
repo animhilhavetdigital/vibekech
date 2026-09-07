@@ -4,37 +4,37 @@
   
   <!-- Homepage -->
   <url>
-    <loc>https://truekechtours.com/</loc>
-    <lastmod>2026-08-27</lastmod>
+    <loc>https://vibekech.com/</loc>
+    <lastmod>2026-09-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
     <image:image>
-      <image:loc>https://truekechtours.com/herophoto/parker-hilton-0gHcDpcYxOI-unsplash.jpg</image:loc>
-      <image:title>Marrakech Desert Excursions and Sahara Tours</image:title>
+      <image:loc>https://vibekech.com/herophoto/parker-hilton-0gHcDpcYxOI-unsplash.jpg</image:loc>
+      <image:title>Marrakech Desert Excursions and Sahara Tours - VibeKech</image:title>
       <image:caption>Agafay desert luxury camp and sunset camel trek</image:caption>
     </image:image>
   </url>
 
   <!-- Tour Detail & Booking -->
   <url>
-    <loc>https://truekechtours.com/tour-detail.html</loc>
-    <lastmod>2026-08-27</lastmod>
+    <loc>https://vibekech.com/tour-detail.html</loc>
+    <lastmod>2026-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <!-- About Us -->
   <url>
-    <loc>https://truekechtours.com/aboutus.html</loc>
-    <lastmod>2026-08-27</lastmod>
+    <loc>https://vibekech.com/aboutus.html</loc>
+    <lastmod>2026-09-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <!-- Contact Us -->
   <url>
-    <loc>https://truekechtours.com/contactus.html</loc>
-    <lastmod>2026-08-27</lastmod>
+    <loc>https://vibekech.com/contactus.html</loc>
+    <lastmod>2026-09-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

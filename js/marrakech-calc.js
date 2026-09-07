@@ -2,7 +2,7 @@
  * Marrakech GlobeTrek Travel Interactive Calculator & Services Engine
  */
 
-const WHATSAPP_PHONE = '212659672184';
+const WHATSAPP_PHONE = '212663040642';
 
 document.addEventListener('DOMContentLoaded', function() {
     initDefaultDates();
