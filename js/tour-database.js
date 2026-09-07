@@ -79,7 +79,7 @@ const TOURS_DATABASE = {
         languages: 'English, Français, Español, Deutsch, العربية',
         pickup: 'Included from your Riad/Hotel in Marrakech (07:30 AM)',
         images: [
-            './herophoto/atlas-kasbah-landscape.webp',
+            './herophoto/tienko-dima-Lz8x6EC4pY0-unsplash.jpg',
             './herophoto/imgi_13_ee3b303bb4a3ea49c5067e2b7e7c99b1-1077x580.jpg.webp',
             './herophoto/frida-aguilar-estrada-9tiVcbwbZ9M-unsplash.jpg',
             './herophoto/morocco-grand-tour-10days.webp'
@@ -300,7 +300,7 @@ const TOURS_DATABASE = {
         languages: 'English, Français, Español, العربية',
         pickup: 'Included from all Marrakech hotels/Riads (05:00 - 05:45 AM)',
         images: [
-            './herophoto/gabriele-stravinskaite-gStG3XkIXpc-unsplash.jpg',
+            './herophoto/tomas-malik-VF8P5iTbKQg-unsplash.jpg',
             './herophoto/pommelien-da-silva-cosme-nnDgdAGoeAE-unsplash.jpg',
             './herophoto/ine-driesens-RG06Ii7cu_k-unsplash.jpg'
         ],
@@ -1192,7 +1192,7 @@ const TOURS_DATABASE = {
         languages: 'English, Français, Español, العربية, Italiano',
         pickup: 'Included from your Riad or Hotel in Marrakech',
         images: [
-            './herophoto/palacio-bahia-marrakech.webp',
+            './herophoto/mathieu-gauzy-LkvMfSmny4c-unsplash.jpg',
             './herophoto/koutoubia-sunrise-marrakech.webp',
             './herophoto/moroccan-riad-architecture.webp'
         ],
