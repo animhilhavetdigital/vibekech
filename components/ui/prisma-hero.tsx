@@ -88,14 +88,11 @@ const PrismaHero = () => {
     <section className="h-screen w-full p-3 md:p-6">
       <div className="relative h-full w-full overflow-hidden rounded-2xl md:rounded-[2rem]">
         
-        {/* Background video */}
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
+        {/* Background image */}
+        <img
           className="absolute inset-0 h-full w-full object-cover"
-          src="./herophoto/timelapse-views-of-the-sunrise-in-the-sahara-deser-2025-12-17-08-04-25-utc.mov"
+          src="4khero copy.jpg"
+          alt="VibeKech Hero"
         />
 
         {/* Noise overlay */}
