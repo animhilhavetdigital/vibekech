@@ -2299,125 +2299,187 @@
                 </div>
 
                 <form id="tailor-made-form">
-                    <!-- Step 1: Destination Preferences -->
-                    <div class="mb-4">
-                        <label class="fw-bold mb-3 d-block" style="font-size: 15px; color: #111;">1. Select Regions & Highlights You Wish to Visit:</label>
-                        <div class="tailor-grid-options" id="dest-options">
-                            <div class="tailor-option-box selected" data-value="Merzouga Sahara">
-                                <i class="icon icon-map"></i>
-                                <span class="opt-title">Sahara Desert</span>
-                                <span class="opt-desc">Merzouga & Erg Chebbi</span>
+                    <!-- Step 1: Service Type (VIP Privatisé vs Partage) & Group Type -->
+                    <div class="row mb-4">
+                        <div class="col-md-6 mb-3 mb-md-0">
+                            <label class="fw-bold mb-3 d-block" style="font-size: 15px; color: #111;">1. Type de Formule (Formula / Service Type):</label>
+                            <div class="tailor-grid-options" id="service-type-options" style="grid-template-columns: repeat(2, 1fr);">
+                                <div class="tailor-option-box selected" data-value="VIP Privatisé (Sur-Mesure 100% Privatise)">
+                                    <i class="icon icon-star"></i>
+                                    <span class="opt-title">VIP Privatisé</span>
+                                    <span class="opt-desc">Véhicule & Chauffeur Privé 100%</span>
+                                </div>
+                                <div class="tailor-option-box" data-value="Shared / Partage (Petit Groupe)">
+                                    <i class="icon icon-users"></i>
+                                    <span class="opt-title">Shared / Partage</span>
+                                    <span class="opt-desc">En groupe partagé à prix réduit</span>
+                                </div>
                             </div>
-                            <div class="tailor-option-box" data-value="Marrakech Medina">
-                                <i class="icon icon-heart"></i>
-                                <span class="opt-title">Marrakech</span>
-                                <span class="opt-desc">Palaces, Souks & Majorelle</span>
-                            </div>
-                            <div class="tailor-option-box" data-value="Imperial Cities (Fez/Rabat)">
-                                <i class="icon icon-star"></i>
-                                <span class="opt-title">Imperial Cities</span>
-                                <span class="opt-desc">Fez, Meknes & Rabat</span>
-                            </div>
-                            <div class="tailor-option-box" data-value="High Atlas & Imlil">
-                                <i class="icon icon-plane"></i>
-                                <span class="opt-title">High Atlas & Imlil</span>
-                                <span class="opt-desc">Berber Villages & Valleys</span>
-                            </div>
-                            <div class="tailor-option-box" data-value="Atlantic Coast (Essaouira/Agadir)">
-                                <i class="icon icon-compass"></i>
-                                <span class="opt-title">Atlantic Coast</span>
-                                <span class="opt-desc">Essaouira & Taghazout</span>
-                            </div>
-                            <div class="tailor-option-box" data-value="Chefchaouen Blue City">
-                                <i class="icon icon-place"></i>
-                                <span class="opt-title">Chefchaouen</span>
-                                <span class="opt-desc">The Blue Pearl of the North</span>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="fw-bold mb-3 d-block" style="font-size: 15px; color: #111;">2. Type de Voyageurs (Group / Travelers):</label>
+                            <div class="tailor-grid-options" id="group-type-options" style="grid-template-columns: repeat(2, 1fr);">
+                                <div class="tailor-option-box" data-value="Solo Traveler">
+                                    <span class="opt-title">Solo</span>
+                                    <span class="opt-desc">Voyageur individuel</span>
+                                </div>
+                                <div class="tailor-option-box selected" data-value="Couple">
+                                    <span class="opt-title">Couple</span>
+                                    <span class="opt-desc">2 Personnes</span>
+                                </div>
+                                <div class="tailor-option-box" data-value="Famille">
+                                    <span class="opt-title">Famille</span>
+                                    <span class="opt-desc">Avec enfants / proches</span>
+                                </div>
+                                <div class="tailor-option-box" data-value="Groupe d'Amis / Pro">
+                                    <span class="opt-title">Groupe</span>
+                                    <span class="opt-desc">Amis / Team Building</span>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Step 2: Trip Style & Accommodation -->
+                    <!-- Step 2: Destination Cities (Single vs Multiple Cities) -->
+                    <div class="mb-4">
+                        <label class="fw-bold mb-2 d-block" style="font-size: 15px; color: #111;">3. Sélection des Villes & Destinations (Une ou Plusieurs Villes):</label>
+                        <p class="text-muted small mb-3">Cliquez pour sélectionner une ou plusieurs villes à inclure dans votre itinéraire :</p>
+                        <div class="tailor-grid-options mb-3" id="dest-options">
+                            <div class="tailor-option-box selected" data-value="Marrakech">
+                                <i class="icon icon-place"></i>
+                                <span class="opt-title">Marrakech</span>
+                                <span class="opt-desc">Médina, Palaces & Palmeraie</span>
+                            </div>
+                            <div class="tailor-option-box selected" data-value="Desert Agafay">
+                                <i class="icon icon-map"></i>
+                                <span class="opt-title">Désert d'Agafay</span>
+                                <span class="opt-desc">Camps, Quad & Dîner Coucher du Soleil</span>
+                            </div>
+                            <div class="tailor-option-box selected" data-value="Sahara Merzouga / Ouarzazate">
+                                <i class="icon icon-map"></i>
+                                <span class="opt-title">Merzouga & Sahara</span>
+                                <span class="opt-desc">Dunes Erg Chebbi & Ouarzazate</span>
+                            </div>
+                            <div class="tailor-option-box" data-value="Essaouira / Taghazout">
+                                <i class="icon icon-compass"></i>
+                                <span class="opt-title">Côte Atlantique</span>
+                                <span class="opt-desc">Essaouira, Agadir & Taghazout</span>
+                            </div>
+                            <div class="tailor-option-box" data-value="Villes Impériales (Fès / Rabat / Meknès)">
+                                <i class="icon icon-star"></i>
+                                <span class="opt-title">Villes Impériales</span>
+                                <span class="opt-desc">Fès, Rabat, Meknès & Volubilis</span>
+                            </div>
+                            <div class="tailor-option-box" data-value="Chefchaouen & Tangier">
+                                <i class="icon icon-heart"></i>
+                                <span class="opt-title">Chefchaouen & Nord</span>
+                                <span class="opt-desc">La ville bleue & Tanger</span>
+                            </div>
+                        </div>
+                        <div class="tailor-input-group">
+                            <label style="font-size: 13px; font-weight: 600; color: #444;">🏙️ Vous souhaitez visiter d'autres villes spécifiques non mentionnées ci-dessus ? (Optionnel)</label>
+                            <input type="text" id="tailor-custom-cities" class="form-control" placeholder="Ex: Ouarzazate, Zagora, Ifrane, Taroudant, Dades, Asilah, El Jadida...">
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Activities Selection & Custom Activities -->
+                    <div class="mb-4">
+                        <label class="fw-bold mb-2 d-block" style="font-size: 15px; color: #111;">4. Activités à inclure (Sélectionnez ou ajoutez des activités sur-mesure) :</label>
+                        <div class="tailor-grid-options mb-3" id="activity-options" style="grid-template-columns: repeat(3, 1fr);">
+                            <div class="tailor-option-box selected" data-value="Quad Biking & Camel Ride">
+                                <span class="opt-title">Quad & Balade Chameau</span>
+                            </div>
+                            <div class="tailor-option-box selected" data-value="Hot Air Balloon Sunrise">
+                                <span class="opt-title">Montgolfière au Lever du Soleil</span>
+                            </div>
+                            <div class="tailor-option-box selected" data-value="Agafay Dinner Show">
+                                <span class="opt-title">Dîner Spectacle Désert</span>
+                            </div>
+                            <div class="tailor-option-box" data-value="Hammam & SPA Massage">
+                                <span class="opt-title">Hammam Traditionnel & SPA</span>
+                            </div>
+                            <div class="tailor-option-box" data-value="Guided Medina Historical Tour">
+                                <span class="opt-title">Visite Guidée Historique</span>
+                            </div>
+                            <div class="tailor-option-box" data-value="Buggy 800cc Safari">
+                                <span class="opt-title">Safari Buggy 800cc</span>
+                            </div>
+                        </div>
+                        <div class="tailor-input-group">
+                            <label style="font-size: 13px; font-weight: 600; color: #444;">➕ Vous souhaitez ajouter d'autres activités spécifiques de votre choix ? (Optionnel)</label>
+                            <input type="text" id="tailor-custom-activities" class="form-control" placeholder="Ex: Surfing à Taghazout, Parapente, Dîner Chef Privé, Cours de Cuisine, Golf 18 Trous...">
+                        </div>
+                    </div>
+
+                    <!-- Step 4: Accommodations & Trip Details -->
                     <div class="row mb-4">
                         <div class="col-md-6 mb-3 mb-md-0">
-                            <label class="fw-bold mb-3 d-block" style="font-size: 15px; color: #111;">2. Preferred Travel Style:</label>
-                            <div class="tailor-grid-options" id="style-options" style="grid-template-columns: repeat(2, 1fr);">
-                                <div class="tailor-option-box selected" data-value="Culture & Heritage">
-                                    <span class="opt-title">Culture & Heritage</span>
-                                    <span class="opt-desc">Monuments, Souks, Guided</span>
+                            <label class="fw-bold mb-3 d-block" style="font-size: 15px; color: #111;">5. Style d'Hébergement au Choix :</label>
+                            <div class="tailor-grid-options" id="hotel-options" style="grid-template-columns: repeat(2, 1fr);">
+                                <div class="tailor-option-box selected" data-value="Authentic Riads">
+                                    <span class="opt-title">Riads Authentiques</span>
+                                    <span class="opt-desc">Charme & décor traditionnel</span>
                                 </div>
-                                <div class="tailor-option-box" data-value="Adventure & 4x4">
-                                    <span class="opt-title">Adventure & 4x4</span>
-                                    <span class="opt-desc">Dunes, Quads, Mountain</span>
+                                <div class="tailor-option-box" data-value="4-Star Superior">
+                                    <span class="opt-title">4★ Boutique / Riad</span>
+                                    <span class="opt-desc">Grand confort & piscine</span>
                                 </div>
-                                <div class="tailor-option-box" data-value="Romantic & Honeymoon">
-                                    <span class="opt-title">Romantic / Honeymoon</span>
-                                    <span class="opt-desc">Luxury camps, Spas, Riads</span>
+                                <div class="tailor-option-box" data-value="5-Star Luxury Palace">
+                                    <span class="opt-title">5★ Palace de Luxe</span>
+                                    <span class="opt-desc">Service VIP haut de gamme</span>
                                 </div>
-                                <div class="tailor-option-box" data-value="Family Friendly">
-                                    <span class="opt-title">Family Friendly</span>
-                                    <span class="opt-desc">Comfortable pace & kids activities</span>
+                                <div class="tailor-option-box" data-value="Luxury Sahara Bivouac">
+                                    <span class="opt-title">Bivouac Royal Désert</span>
+                                    <span class="opt-desc">Campement privé chauffé</span>
                                 </div>
                             </div>
                         </div>
 
                         <div class="col-md-6">
-                            <label class="fw-bold mb-3 d-block" style="font-size: 15px; color: #111;">3. Accommodation Preference:</label>
-                            <div class="tailor-grid-options" id="hotel-options" style="grid-template-columns: repeat(2, 1fr);">
-                                <div class="tailor-option-box selected" data-value="Authentic Riads">
-                                    <span class="opt-title">Authentic Riads</span>
-                                    <span class="opt-desc">Charming Moroccan decor</span>
+                            <label class="fw-bold mb-3 d-block" style="font-size: 15px; color: #111;">6. Durée & Nombre de Voyageurs :</label>
+                            <div class="tailor-form-row" style="grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 0;">
+                                <div class="tailor-input-group">
+                                    <label>Durée (En Jours)</label>
+                                    <select id="tailor-days">
+                                        <option value="1 Jour">1 Jour (Excursion Express)</option>
+                                        <option value="2 Jours">2 Jours (Désert Express)</option>
+                                        <option value="3 Jours">3 Jours (Désert & Atlas)</option>
+                                        <option value="4 Jours" selected>4 Jours (Circuit Classic)</option>
+                                        <option value="6 Jours">6 Jours (Villes & Désert)</option>
+                                        <option value="8 Jours">8 Jours (Grand Tour)</option>
+                                        <option value="10+ Jours">10+ Jours (Tour du Maroc)</option>
+                                    </select>
                                 </div>
-                                <div class="tailor-option-box" data-value="4-Star Superior">
-                                    <span class="opt-title">4★ Boutique / Riad</span>
-                                    <span class="opt-desc">High comfort & amenities</span>
-                                </div>
-                                <div class="tailor-option-box" data-value="5-Star Luxury Palace">
-                                    <span class="opt-title">5★ Luxury Palace</span>
-                                    <span class="opt-desc">Top tier VIP luxury</span>
-                                </div>
-                                <div class="tailor-option-box" data-value="Luxury Sahara Bivouac">
-                                    <span class="opt-title">Royal Luxury Bivouac</span>
-                                    <span class="opt-desc">Private heated desert tent</span>
+                                <div class="tailor-input-group">
+                                    <label>Nombre de Personnes</label>
+                                    <input type="number" id="tailor-travelers" value="2" min="1" max="50" required>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Step 3: Traveler details -->
-                    <div class="tailor-form-row">
+                    <!-- Step 5: Traveler Contact Info -->
+                    <div class="tailor-form-row mb-3">
                         <div class="tailor-input-group">
-                            <label>Your Name *</label>
-                            <input type="text" id="tailor-name" placeholder="e.g. John Doe" required>
+                            <label>Nom & Prénom *</label>
+                            <input type="text" id="tailor-name" placeholder="Ex: Mohamed Alami" required>
                         </div>
                         <div class="tailor-input-group">
-                            <label>WhatsApp Phone Number *</label>
-                            <input type="tel" id="tailor-phone" placeholder="e.g. +33 6 12 34 56 78" required>
+                            <label>Téléphone / WhatsApp *</label>
+                            <input type="tel" id="tailor-phone" placeholder="Ex: +212 6 12 34 56 78" required>
                         </div>
                         <div class="tailor-input-group">
-                            <label>Number of Days</label>
-                            <select id="tailor-days">
-                                <option value="3">3 Days (Short Desert Escape)</option>
-                                <option value="4" selected>4 Days (Classic Desert & Atlas)</option>
-                                <option value="6">6 Days (Imperial Cities + Desert)</option>
-                                <option value="8">8 Days (Grand Morocco Tour)</option>
-                                <option value="10+">10+ Days (Complete Morocco Journey)</option>
-                            </select>
+                            <label>Adresse Email *</label>
+                            <input type="email" id="tailor-email" placeholder="Ex: client@gmail.com" required>
                         </div>
                     </div>
 
-                    <div class="tailor-form-row">
-                        <div class="tailor-input-group">
-                            <label>Number of Travelers</label>
-                            <input type="number" id="tailor-travelers" value="2" min="1" max="50">
-                        </div>
-                        <div class="tailor-input-group" style="grid-column: span 2;">
-                            <label>Special Requests or Desired Dates</label>
-                            <input type="text" id="tailor-notes" placeholder="e.g. Travel in October, traveling with elderly, vegetarian meals...">
-                        </div>
+                    <div class="tailor-input-group mb-4">
+                        <label>Remarques / Dates souhaitées / Précisions spéciales</label>
+                        <input type="text" id="tailor-notes" placeholder="Ex: Arrivée le 15 Octobre, sièges bébé, préférences alimentaires, hôtel spécifique...">
                     </div>
 
                     <button type="submit" class="tailor-submit-btn btn-with-icon brand w-100">
-                        <span>Send Custom Tour Request via WhatsApp</span>
+                        <span>Envoyer ma Demande Sur-Mesure sur WhatsApp</span>
                         <div class="btn-icon-circle">
                             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
                         </div>

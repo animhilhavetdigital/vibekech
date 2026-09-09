@@ -640,14 +640,14 @@ function initFaqAccordion() {
 
 // 10. Tailor-Made Trip Planner Interactive Logic
 function initTailorMadeForm() {
-    const optionGroups = ['dest-options', 'style-options', 'hotel-options'];
+    const optionGroups = ['service-type-options', 'group-type-options', 'dest-options', 'activity-options', 'hotel-options'];
     optionGroups.forEach(groupId => {
         const groupEl = document.getElementById(groupId);
         if (!groupEl) return;
         const boxes = groupEl.querySelectorAll('.tailor-option-box');
         boxes.forEach(box => {
             box.addEventListener('click', function() {
-                if (groupId === 'dest-options') {
+                if (groupId === 'dest-options' || groupId === 'activity-options') {
                     this.classList.toggle('selected');
                 } else {
                     boxes.forEach(b => b.classList.remove('selected'));
@@ -663,44 +663,79 @@ function initTailorMadeForm() {
     form.addEventListener('submit', function(e) {
         e.preventDefault();
 
+        // Formule VIP vs Shared
+        const serviceBox = document.querySelector('#service-type-options .tailor-option-box.selected');
+        const selectedService = serviceBox ? (serviceBox.getAttribute('data-value') || serviceBox.querySelector('.opt-title').innerText) : 'VIP Privatisé';
+
+        // Type de Voyageurs
+        const groupBox = document.querySelector('#group-type-options .tailor-option-box.selected');
+        const selectedGroup = groupBox ? (groupBox.getAttribute('data-value') || groupBox.querySelector('.opt-title').innerText) : 'Couple';
+
+        // Selected Cities / Destinations
         const selectedDests = [];
         const destBoxes = document.querySelectorAll('#dest-options .tailor-option-box.selected');
         destBoxes.forEach(b => selectedDests.push(b.getAttribute('data-value') || b.querySelector('.opt-title').innerText));
 
-        const styleBox = document.querySelector('#style-options .tailor-option-box.selected');
-        const selectedStyle = styleBox ? (styleBox.getAttribute('data-value') || styleBox.querySelector('.opt-title').innerText) : 'Standard';
+        // Custom Cities Free Input
+        const customCitiesInput = document.getElementById('tailor-custom-cities') ? document.getElementById('tailor-custom-cities').value.trim() : '';
 
+        // Selected Activities
+        const selectedActivities = [];
+        const actBoxes = document.querySelectorAll('#activity-options .tailor-option-box.selected');
+        actBoxes.forEach(b => selectedActivities.push(b.getAttribute('data-value') || b.querySelector('.opt-title').innerText));
+
+        // Custom Activities Free Input
+        const customActivitiesInput = document.getElementById('tailor-custom-activities') ? document.getElementById('tailor-custom-activities').value.trim() : '';
+
+        // Accommodation
         const hotelBox = document.querySelector('#hotel-options .tailor-option-box.selected');
-        const selectedHotel = hotelBox ? (hotelBox.getAttribute('data-value') || hotelBox.querySelector('.opt-title').innerText) : 'Standard Riad';
+        const selectedHotel = hotelBox ? (hotelBox.getAttribute('data-value') || hotelBox.querySelector('.opt-title').innerText) : 'Authentic Riads';
 
+        // Contact & Trip Info
         const name = document.getElementById('tailor-name') ? document.getElementById('tailor-name').value : '';
         const phone = document.getElementById('tailor-phone') ? document.getElementById('tailor-phone').value : '';
-        const days = document.getElementById('tailor-days') ? document.getElementById('tailor-days').value : '4';
+        const email = document.getElementById('tailor-email') ? document.getElementById('tailor-email').value : '';
+        const days = document.getElementById('tailor-days') ? document.getElementById('tailor-days').value : '4 Jours';
         const travelers = document.getElementById('tailor-travelers') ? document.getElementById('tailor-travelers').value : '2';
         const notes = document.getElementById('tailor-notes') ? document.getElementById('tailor-notes').value : '';
 
-        let message = `*🌟 New Custom Morocco Tour Request (Sur Mesure)*\n\n`;
-        message += `👤 *Name:* ${name}\n`;
-        message += `📱 *WhatsApp/Phone:* ${phone}\n`;
-        message += `⏱ *Duration:* ${days} Days\n`;
-        message += `👥 *Travelers:* ${travelers} People\n`;
-        message += `📍 *Destinations:* ${selectedDests.join(', ') || 'All Morocco'}\n`;
-        message += `🎭 *Trip Style:* ${selectedStyle}\n`;
-        message += `🏨 *Accommodation:* ${selectedHotel}\n`;
-        if (notes) {
-            message += `📝 *Notes:* ${notes}\n`;
+        let message = `*✨ NOUVELLE DEMANDE DE VOYAGE SUR-MESURE*\n\n`;
+        message += `👤 *Nom & Prénom:* ${name}\n`;
+        message += `📱 *Téléphone / WhatsApp:* ${phone}\n`;
+        if (email) message += `📧 *Email:* ${email}\n`;
+        message += `⭐️ *Formule Souhaitée:* ${selectedService}\n`;
+        message += `👥 *Type de Voyageurs:* ${selectedGroup} (${travelers} Personnes)\n`;
+        message += `⏱ *Durée du Séjour:* ${days}\n`;
+        message += `📍 *Villes & Destinations:* ${selectedDests.join(', ') || 'Marrakech & Désert'}\n`;
+        if (customCitiesInput) {
+            message += `🏙️ *Autres Villes Ajoutées:* ${customCitiesInput}\n`;
         }
-        message += `\n👉 Please send me the custom itinerary and quotation.`;
+        if (selectedActivities.length) {
+            message += `🎯 *Activités Sélectionnées:* ${selectedActivities.join(', ')}\n`;
+        }
+        if (customActivitiesInput) {
+            message += `➕ *Activités Sur-Mesure Ajoutées:* ${customActivitiesInput}\n`;
+        }
+        message += `🏨 *Style d'Hébergement:* ${selectedHotel}\n`;
+        if (notes) {
+            message += `📝 *Remarques & Dates:* ${notes}\n`;
+        }
+        message += `\n👉 Merci de me transmettre mon itinéraire personnalisé et mon devis s'il vous plaît !`;
 
         // Send Auto Notification Email for Custom Tour
         sendAutoNotification({
             "_subject": `✨ NOUVELLE DEMANDE VOYAGE SUR MESURE - ${name}`,
             "Nom_Client": name,
             "Telephone_WhatsApp": phone,
-            "Duree_Jours": days + ' Jours',
+            "Email": email,
+            "Formule": selectedService,
+            "Type_Voyageurs": selectedGroup,
             "Nombre_Voyageurs": travelers + ' Personnes',
-            "Destinations": selectedDests.join(', ') || 'Tout le Maroc',
-            "Style_Voyage": selectedStyle,
+            "Duree": days,
+            "Villes_Destinations": selectedDests.join(', ') || 'Marrakech & Désert',
+            "Autres_Villes_Ajoutees": customCitiesInput || 'Aucune',
+            "Activites": selectedActivities.join(', '),
+            "Activites_Sur_Mesure": customActivitiesInput || 'Aucune',
             "Hebergement": selectedHotel,
             "Remarques": notes || 'Aucune'
         });
