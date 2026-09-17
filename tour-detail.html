@@ -45,6 +45,35 @@
     <!-- Favicon -->
     <link rel="shortcut icon" href="logo1.png">
     <link rel="apple-touch-icon-precomposed" href="logo1.png">
+
+    <!-- JSON-LD Structured Data: TouristTrip & Product -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TouristTrip",
+      "name": "Marrakech Desert Tours & Excursions",
+      "description": "Book luxury Agafay desert dinners, Merzouga 3-day Sahara treks, Ourika Valley trips, and private Marrakech transfers.",
+      "provider": {
+        "@type": "TravelAgency",
+        "name": "VibeKech",
+        "url": "https://vibekech.com/",
+        "telephone": "+212663040642"
+      },
+      "offers": {
+        "@type": "AggregateOffer",
+        "lowPrice": "150",
+        "highPrice": "3500",
+        "priceCurrency": "MAD",
+        "offerCount": "12"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "128",
+        "bestRating": "5"
+      }
+    }
+    </script>
 </head>
 
 <body class="tour-detail-page" style="padding-top: 100px;">

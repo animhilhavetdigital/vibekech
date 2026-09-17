@@ -3,6 +3,11 @@ User-agent: *
 Allow: /
 Disallow: /backend/
 Disallow: /tmp/
+Disallow: /*.json$
+
+# Googlebot Specific
+User-agent: Googlebot
+Allow: /
 
 # Host & Sitemap
 Host: https://vibekech.com
